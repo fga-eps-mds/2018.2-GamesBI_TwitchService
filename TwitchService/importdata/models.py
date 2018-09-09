@@ -78,9 +78,9 @@ class Stream(models.Model):
 		null=True
 	)
 
-	user = models.ManyToManyField(
+	user = models.ForeignKey(
 		User,
-		blank=True
+		on_delete=models.CASCADE
 	)
 
 	def __str__(self):
