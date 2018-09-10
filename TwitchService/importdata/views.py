@@ -3,7 +3,7 @@ import requests
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Stream, User, Game
+from .models import Stream, User
 from .serializers import StreamSerializer
 
 
@@ -88,7 +88,7 @@ class TwitchView(APIView):
         game_id = []
 
         for game_id in game_id_list:
-            url = 
+            url =  'https://api.twitch.tv/helix/stream?id={}'.format(game_id) 
             header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
             'Accept': 'application/json'}
 
@@ -104,7 +104,7 @@ class TwitchView(APIView):
         else:
             id = None
 
-
+    '''
     def get_user_data(self, user_id_list):
         user_id = []
 
@@ -117,9 +117,10 @@ class TwitchView(APIView):
             ndata = userdata.json()
 
         return ndata
+    '''
 
     def filter_user_data(self, user_data):
-
+        pass
 
 
     def save_stream(self, game_list, stream_list):
