@@ -43,6 +43,11 @@ class Stream(models.Model):
 		primary_key=True,
 	)
 
+	game_id = models.IntegerField(
+		('Game ID'),
+		help_text=("Id do jogo na Twitch")
+	)
+
 	game_name = models.CharField(
 		('Name'),
 		help_text=("Name of game"),
@@ -61,7 +66,6 @@ class Stream(models.Model):
 		('Started date'),
 		help_text=("Date when stream started"),
 		null=True
-		#
 	)
 
 	type = models.CharField(
