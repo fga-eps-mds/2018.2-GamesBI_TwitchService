@@ -17,7 +17,7 @@ class TwitchView(APIView):
     '''
     def get(self, request, format=None):
 
-        games_name = ['fortnite']
+        games_name = ['fortnite', 'The walking dead']
         '''
         url = 'http://localhost:8000/get_igdb_games_list/Name'
         header = {'Accept': 'application/json'}
@@ -60,29 +60,29 @@ class TwitchView(APIView):
 
         return Response(data=games_name)
 
-    def get_game_data(self, games_name):
-        name = []
+    def get_game_data(self, game_name):
 
-        for name in range(len(games_name)):
-            url = 'https://api.twitch.tv/helix/games?name={}'.format(name)
-            header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
-            'Accept': 'application/json'}
+        url = 'https://api.twitch.tv/helix/games?name={}'.format(game_name)
+        header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
+        'Accept': 'application/json'}
 
-            gamedata = requests.get(url, headers=header)
-            ndata = gamedata.json()
+        gamedata = requests.get(url, headers=header)
+        ndata = gamedata.json()
 
         return ndata
 
     def filter_game_data(self, game_data):
 
-        for i in range(len(game_data['data'])):
-            if 'id' in game_data['data'][i]:
-                id = game_data['data'][i]['id']
+        vetor_data = game_data['data']
+
+        for posicao in range(len(vetor_data)):
+            if 'id' in vetor_data[posicao]:
+                id = vetor_data[posicao]['id']
             else:
                 id = None
 
-            if 'name' in game_data['data'][i]:
-                name = game_data['data'][i]['name']
+            if 'name' in vetor_data[posicao]:
+                name = vetor_data[posicao]['name']
             else:
                 name = None
 
@@ -93,91 +93,89 @@ class TwitchView(APIView):
 
         return filtered_game_data
 
-    def get_stream_data(self, game_id_list):
-        game_id = []
+    def get_stream_data(self, game_id):
 
-        for game_id in range(len(game_id_list)):
-            url =  'https://api.twitch.tv/helix/streams?id={}'.format(game_id)
-            header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
-            'Accept': 'application/json'}
+        url =  'https://api.twitch.tv/helix/streams?id={}'.format(game_id)
+        header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
+        'Accept': 'application/json'}
 
-            streamdata = requests.get(url, headers=header)
-            ndata = streamdata.json() 
+        streamdata = requests.get(url, headers=header)
+        ndata = streamdata.json() 
 
         return ndata
 
     def filter_stream_data(self, stream_data):
 
-        for i in range(len(stream_data['data'])):
-            if 'id' in stream_data['data'][i]:
-                id = stream_data['data'][i]['id']
+        vetor_data = stream_data['data']
+
+        for posicao in range(len(vetor_data)):
+            if 'id' in vetor_data[posicao]:
+                id = vetor_data[posicao]['id']
             else:
                 id = None
 
-            if 'game_id' in stream_data['data'][i]:
-                game_id = stream_data['data'][i]['game_id']
+            if 'game_id' in vetor_data[posicao]:
+                game_id = vetor_data[posicao]['game_id']
             else:
                 game_id = None
 
-            if 'game_name' in stream_data['data'][i]:
-                game_name = stream_data['data'][i]['game_name']
+            if 'game_name' in vetor_data[posicao]:
+                game_name = vetor_data[posicao]['game_name']
             else:
                 game_name = None
 
-            if 'language' in stream_data['data'][i]:
-                language = stream_data['data'][i]['language']
+            if 'language' in vetor_data[posicao]:
+                language = vetor_data[posicao]['language']
             else:
                 language = None
 
-            if 'started_at' in stream_data['data'][i]:
-                started_at = stream_data['data'][i]['started_at']
+            if 'started_at' in vetor_data[posicao]:
+                started_at = vetor_data[posicao]['started_at']
             else:
                 started_at = None
 
-            if 'type' in stream_data['data'][i]:
-                type = stream_data['data'][i]['type']
+            if 'type' in vetor_data[posicao]:
+                type = vetor_data[posicao]['type']
             else:
                 type = None
 
-            if 'viewer_count' in stream_data['data'][i]:
-                viewer_count = stream_data['data'][i]['viewer_count']
+            if 'viewer_count' in vetor_data[posicao]:
+                viewer_count = vetor_data[posicao]['viewer_count']
             else:
                 viewer_count = None
 
-            if 'user_id' in stream_data['data'][i]:
-                user_id = stream_data['data'][i]['user_id']
+            if 'user_id' in vetor_data[posicao]:
+                user_id = vetor_data[posicao]['user_id']
             else:
                 user_id = None
 
-        filtered_stream_data = {
-        'id': id,
-        'game_id': game_id,
-        'game_name': game_name,
-        'language': language,
-        'started_at': started_at,
-        'type': type,
-        'viewer_count': viewer_count,
-        'user_id': user_id
-        }
+            filtered_stream_data = {
+            'id': id,
+            'game_id': game_id,
+            'game_name': game_name,
+            'language': language,
+            'started_at': started_at,
+            'type': type,
+            'viewer_count': viewer_count,
+            'user_id': user_id
+            }
 
-        return filtered_stream_data
+            return filtered_stream_data
 
 
-    def get_user_data(self, user_id_list):
-        user_id = []
-    
-        for user_id in user_id_list:
-            url = 'https://api.twitch.tv/kraken/users?_id={}'.format(user_id)
-            header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
-            'Accept': 'application/json'}
+    def get_user_data(self, user_id):
 
-            userdata = requests.get(url, headers=header)
-            ndata = userdata.json()
+        url = 'https://api.twitch.tv/kraken/users?_id={}'.format(user_id)
+        header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
+        'Accept': 'application/json'}
+
+        userdata = requests.get(url, headers=header)
+        ndata = userdata.json()
 
         return ndata
 
-    def filter_user_data(self, user_data):
-        
+    def filter_user_data(self, user_data):     
+
         if 'id' in user_data:
             id = user_data['id']
         else:
