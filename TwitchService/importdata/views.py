@@ -17,9 +17,6 @@ class TwitchView(APIView):
     '''
     def get(self, request, format=None):
 
-        Stream.objects.all().delete()
-        User.objects.all().delete()
-
         games_name = ['fortnite']
         '''
         url = 'http://localhost:8000/get_igdb_games_list/Name'
@@ -64,10 +61,10 @@ class TwitchView(APIView):
         return Response(data=games_name)
 
     def get_game_data(self, games_name):
-        game_name = []
+        name = []
 
-        for game_name in games_name:
-            url = 'https://api.twitch.tv/helix/games?name={}'.format(game_name)
+        for name in range(len(games_name)):
+            url = 'https://api.twitch.tv/helix/games?name={}'.format(name)
             header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
             'Accept': 'application/json'}
 
@@ -78,15 +75,16 @@ class TwitchView(APIView):
 
     def filter_game_data(self, game_data):
 
-        if 'id' in game_data:
-            id = game_data['id']
-        else:
-            id = '33214'
+        for i in range(len(game_data['data'])):
+            if 'id' in game_data['data'][i]:
+                id = game_data['data'][i]['id']
+            else:
+                id = None
 
-        if 'name' in game_data:
-            name = game_data['name']
-        else:
-            name = None
+            if 'name' in game_data['data'][i]:
+                name = game_data['data'][i]['name']
+            else:
+                name = None
 
         filtered_game_data = {
         'id': id,
@@ -98,7 +96,7 @@ class TwitchView(APIView):
     def get_stream_data(self, game_id_list):
         game_id = []
 
-        for game_id in game_id_list:
+        for game_id in range(len(game_id_list)):
             url =  'https://api.twitch.tv/helix/streams?id={}'.format(game_id)
             header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
             'Accept': 'application/json'}
@@ -110,45 +108,46 @@ class TwitchView(APIView):
 
     def filter_stream_data(self, stream_data):
 
-        if 'id' in stream_data:
-            id = stream_data['id']
-        else:
-            id = '30328259280'
+        for i in range(len(stream_data['data'])):
+            if 'id' in stream_data['data'][i]:
+                id = stream_data['data'][i]['id']
+            else:
+                id = None
 
-        if 'game_id' in stream_data:
-            game_id = stream_data['game_id']
-        else:
-            game_id = '33214'
+            if 'game_id' in stream_data['data'][i]:
+                game_id = stream_data['data'][i]['game_id']
+            else:
+                game_id = None
 
-        if 'game_name' in stream_data:
-            game_name = stream_data['game_name']
-        else:
-            game_name = None
+            if 'game_name' in stream_data['data'][i]:
+                game_name = stream_data['data'][i]['game_name']
+            else:
+                game_name = None
 
-        if 'language' in stream_data:
-            language = stream_data['language']
-        else:
-            language = None
+            if 'language' in stream_data['data'][i]:
+                language = stream_data['data'][i]['language']
+            else:
+                language = None
 
-        if 'started_at' in stream_data:
-            started_at = stream_data['started_at']
-        else:
-            started_at = None
+            if 'started_at' in stream_data['data'][i]:
+                started_at = stream_data['data'][i]['started_at']
+            else:
+                started_at = None
 
-        if 'type' in stream_data:
-            type = stream_data['type']
-        else:
-            type = None
+            if 'type' in stream_data['data'][i]:
+                type = stream_data['data'][i]['type']
+            else:
+                type = None
 
-        if 'viewer_count' in stream_data:
-            viewer_count = stream_data['viewer_count']
-        else:
-            viewer_count = None
+            if 'viewer_count' in stream_data['data'][i]:
+                viewer_count = stream_data['data'][i]['viewer_count']
+            else:
+                viewer_count = None
 
-        if 'user_id' in stream_data:
-            user_id = stream_data['user_id']
-        else:
-            user_id = '19571641'
+            if 'user_id' in stream_data['data'][i]:
+                user_id = stream_data['data'][i]['user_id']
+            else:
+                user_id = None
 
         filtered_stream_data = {
         'id': id,
@@ -182,7 +181,7 @@ class TwitchView(APIView):
         if 'id' in user_data:
             id = user_data['id']
         else:
-            id = '19571641' 
+            id = None 
 
         if 'display_name' in user_data:
             display_name = user_data['display_name']
