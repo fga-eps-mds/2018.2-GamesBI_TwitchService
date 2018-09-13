@@ -62,9 +62,10 @@ class Stream(models.Model):
 		null=True
 	)
 
-	started_at = models.DateField(
+	started_at = models.CharField(
 		('Started date'),
 		help_text=("Date when stream started"),
+		max_length=100,
 		null=True
 	)
 
