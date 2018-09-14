@@ -16,42 +16,15 @@ class TwitchView(APIView):
             and filter for Null value
     '''
     def get(self, request, format=None):
-
-        games_name = ['fortnite','The walking dead']
-        '''
-        url = 'http://localhost:8000/get_igdb_games_list/Name'
+        
+        url = 'http://igdbweb:8000/api/get_igdb_games_list/name'
         header = {'Accept': 'application/json'}
 
         names_data = requests.get(url, headers=header)
-        games_name = names_data.json()
-        '''
+        games_name = names_data.json()        
 
         for game_name in games_name:
             self.get_game_data(game_name)
-
-        '''
-        streams = Stream.objects.all()
-        for stream in streams:
-            print('------------')
-            print(stream.id)
-            print(stream.game_id)
-            print(stream.game_name)
-            print(stream.language)
-            print(stream.started_at)
-            print(stream.type)
-            print(stream.viewer_count)
-            print(stream.user_id)
-        print('-------------------------------------')
-        users = User.objects.all()
-        for user in users:
-            print(user.id)
-            print(user.display_name)
-            print(user.type)
-            print(user.view_count)
-            print(user.follows)
-
-            print('------------')
-        '''
 
         return Response(data=games_name)
 
