@@ -1,5 +1,6 @@
 import requests
 import os
+import time
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,6 +26,8 @@ class TwitchView(APIView):
         
         for game_name in games_name:
             self.get_game_data(game_name['name'])
+            time.sleep(6)
+
 
         return Response(data=games_name)
 
@@ -129,6 +132,7 @@ class TwitchView(APIView):
 
     def get_user_data(self, user_id):
 
+        time.sleep(6)
         url = 'https://api.twitch.tv/helix/users?id={}'.format(user_id)
         header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
         'Accept': 'application/json'}
