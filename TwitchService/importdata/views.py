@@ -22,9 +22,9 @@ class TwitchView(APIView):
 
         names_data = requests.get(url, headers=header)
         games_name = names_data.json()        
-
+        
         for game_name in games_name:
-            self.get_game_data(game_name)
+            self.get_game_data(game_name['name'])
 
         return Response(data=games_name)
 
@@ -63,12 +63,12 @@ class TwitchView(APIView):
 
     def get_stream_data(self, game_id, filtered_game_data):
 
-        url =  'https://api.twitch.tv/helix/streams?id={}'.format(game_id)
+        url =  'https://api.twitch.tv/helix/streams?game_id={}'.format(game_id)
         header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
         'Accept': 'application/json'}
 
         streamdata = requests.get(url, headers=header)
-        ndata = streamdata.json() 
+        ndata = streamdata.json()
 
         self.filter_stream_data(ndata, filtered_game_data)
 
@@ -191,7 +191,7 @@ class TwitchView(APIView):
         user_id = stream_list['user_id']
         )
 
-        stream.save()
+        stream.save() 
 
         print('a stream do jogo {} foi salva '.format(stream.game_name))
         print('id da stream = {}'.format(stream.id))
