@@ -26,7 +26,7 @@ class TwitchView(APIView):
         
         for game_name in games_name:
             self.get_game_data(game_name['name'])
-            time.sleep(6)
+            time.sleep(3)
 
 
         return Response(data=games_name)
@@ -132,7 +132,8 @@ class TwitchView(APIView):
 
     def get_user_data(self, user_id):
 
-        time.sleep(6)
+        #pegar dados do usuario
+        time.sleep(3)
         url = 'https://api.twitch.tv/helix/users?id={}'.format(user_id)
         header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
         'Accept': 'application/json'}
@@ -140,9 +141,18 @@ class TwitchView(APIView):
         userdata = requests.get(url, headers=header)
         ndata = userdata.json()
 
-        self.filter_user_data(ndata)
+        time.sleep(2)
+        #pegar numero de follows do usuario
+        url2 = 'https://api.twitch.tv/helix/users/follows?to_id={}'.format(user_id)
+        header = {'Client-ID': 'nhnlqt9mgdmkf9ls184tt1nd753472',
+        'Accept': 'application/json'}
 
-    def filter_user_data(self, user_data):
+        userfollows = requests.get(url2, headers=header)
+        followsdata = userfollows.json()
+
+        self.filter_user_data(ndata, followsdata)
+
+    def filter_user_data(self, user_data, user_follows):
 
         vetor_data = user_data['data']
 
@@ -158,7 +168,10 @@ class TwitchView(APIView):
                 display_name = None
 
             if 'type' in posicao:
-                type = posicao['type']
+                if 'type' in posicao == "":
+                    type = None
+                else:
+                    type = posicao['type']
             else:
                 type = None
 
@@ -166,22 +179,15 @@ class TwitchView(APIView):
                 view_count = posicao['view_count']
             else:
                 view_count = None
-
-            if 'follows' in posicao:
-                follows = posicao['follows']
-            else:
-                follows = None
             
             filtered_user_data = {
             'id': id,
             'display_name': display_name,
             'type': type,
-            'view_count': view_count,
-            'follows': follows
+            'view_count': view_count
             }
 
-            self.save_user(filtered_user_data)
-
+            self.save_user(filtered_user_data, user_follows)
 
     def save_stream(self, stream_list, game_list):
         stream = Stream(
@@ -208,19 +214,19 @@ class TwitchView(APIView):
         print('id do usuario = {}'.format(stream.user_id))
         print('---')
 
-    def save_user(self, user_list):
+    def save_user(self, user_list, user_follows):
         user = User(
         id = user_list['id'],
         display_name = user_list['display_name'],
         type = user_list['type'],
         view_count = user_list['view_count'],
-        follows = user_list['follows']
+        follows = user_follows['total']
         )
 
         user.save()
 
-        print('o user {} foi salvo'.format(user.id))
-        print('o display usado = {}'.format(user.display_name))
+        print('o user {} foi salvo'.format(user.display_name))
+        print('o id do usuario = {}'.format(user.id))
         print('o tipo = {}'.format(user.type))
         print('o numero de views = {}'.format(user.view_count))
         print('o numero de follows = {}'.format(user.follows))
