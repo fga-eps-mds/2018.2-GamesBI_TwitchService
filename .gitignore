@@ -23,6 +23,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+**/**/migrations/*
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -87,3 +88,5 @@ local_settings.py
 
 .env
 db.sqlite3
+
+TwitchService/importdata/migrations/0001_initial.py

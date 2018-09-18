@@ -43,6 +43,11 @@ class Stream(models.Model):
 		primary_key=True,
 	)
 
+	game_id = models.IntegerField(
+		('Game ID'),
+		help_text=("Id do jogo na Twitch")
+	)
+
 	game_name = models.CharField(
 		('Name'),
 		help_text=("Name of game"),
@@ -57,11 +62,11 @@ class Stream(models.Model):
 		null=True
 	)
 
-	started_at = models.DateField(
+	started_at = models.CharField(
 		('Started date'),
 		help_text=("Date when stream started"),
+		max_length=100,
 		null=True
-		#
 	)
 
 	type = models.CharField(
@@ -78,9 +83,9 @@ class Stream(models.Model):
 		null=True
 	)
 
-	user = models.ManyToManyField(
+	user = models.ForeignKey(
 		User,
-		blank=True
+		on_delete=models.CASCADE
 	)
 
 	def __str__(self):
