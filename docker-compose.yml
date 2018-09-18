@@ -18,6 +18,8 @@ services:
       - twitchdb
     networks:
       - proxynet
+    environment:
+      - COVERALLS_REPO_TOKEN
 
 networks:
   proxynet:
