@@ -48,3 +48,7 @@ fixture:
 loaddata:
 	# load fixtures saved upon importdata models
 	sudo docker-compose run twitchweb python manage.py loaddata data.json
+
+test:
+	# run unit tests
+	sudo docker-compose run twitchweb python manage.py test
