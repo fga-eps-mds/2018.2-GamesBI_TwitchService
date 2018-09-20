@@ -25,7 +25,7 @@ SECRET_KEY = '347e58x3!ios!#n51q+8(lox5sjv&op(b&0+8rp!2bplztcg3+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'TwitchService.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = { 
+DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'mongo',
         'HOST': 'twitchdb'
-    }   
+    }
 }
 
 # Password validation
