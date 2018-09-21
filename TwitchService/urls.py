@@ -18,7 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('TwitchService.API.urls')),
+    path('API/', include('TwitchService.API.urls')),
     path('import_data/', include('TwitchService.importdata.urls')),
     path(r'^api-auth/', include('rest_framework.urls'))
 ]
