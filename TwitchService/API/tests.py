@@ -18,10 +18,7 @@ class EndpointTestCase(APITestCase, URLPatternsTestCase):
             id = 0,
             game_id = 0,
             game_name = "aaaa",
-            viewer_count = 0,
         )
-
-
 
         self.twitch_endpoint = reverse('request_stream_list')
 
@@ -41,3 +38,4 @@ class EndpointTestCase(APITestCase, URLPatternsTestCase):
         for data in response.data:
             self.assertNotEqual(data['id'], None)
             self.assertNotEqual(data['game_id'], None)
+            self.assertNotEqual(data['game_name'], None)
