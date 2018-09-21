@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from TwitchService.importdata.models import Stream
 from .serializers import StreamSerializer
 
-class GamesTwich(APIView):
+class GamesTwitch(APIView):
     serializers_class = StreamSerializer
     def get(self, request,format=None):
         serializers = self.serializers_class(Stream.objects.all(),many=True)

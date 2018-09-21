@@ -1,6 +1,6 @@
 from django.urls import include, path
-from .views import GamesTwich
+from .views import GamesTwitch
 
 urlpatterns = [
-    path('request_stream_list/', GamesTwich.as_view(), name="get_stream"),
+    path('request_stream_list/', GamesTwitch.as_view(), name="request_stream_list"),
 ]
