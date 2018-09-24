@@ -12,8 +12,11 @@ before_install:
 script: 
   - docker-compose up -d
   - sleep 10
+  - docker-compose run twitchweb python manage.py makemigrations importdata
+  - docker-compose run twitchweb python manage.py migrate importdata
   - docker-compose run twitchweb coverage run --source=. manage.py test
+  - docker-compose run twitchweb coverage report
 
 after_success:
-  - coveralls
+  - docker-compose run twitchweb coveralls
 
