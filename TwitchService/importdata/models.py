@@ -1,5 +1,28 @@
 from django.db import models
 
+class Game(models.Model):
+
+	id = models.IntegerField(
+		('Game ID'),
+		help_text=('Id of the game in Twitch API'),
+		primary_key=True,
+
+	)
+
+	game_name = models.CharField(
+		('Name'),
+		help_text=("Name of game"),
+		max_length=100,
+		null=True
+	)
+
+	total_views = models.IntegerField(
+		('Total views of game'),
+		help_text=("Total views of game"),
+		null=True
+	)
+
+
 class User(models.Model):
 
 	id = models.IntegerField(
@@ -32,8 +55,8 @@ class User(models.Model):
 		('follows'),
 		help_text=("Number of followers"),
 		null=True
-	)		
-	
+	)
+
 
 class Stream(models.Model):
 
@@ -46,13 +69,6 @@ class Stream(models.Model):
 	game_id = models.IntegerField(
 		('Game ID'),
 		help_text=("Id do jogo na Twitch")
-	)
-
-	game_name = models.CharField(
-		('Name'),
-		help_text=("Name of game"),
-		max_length=100,
-		null=True
 	)
 
 	language = models.CharField(
@@ -85,6 +101,11 @@ class Stream(models.Model):
 
 	user = models.ForeignKey(
 		User,
+		on_delete=models.CASCADE
+	)
+
+	Game = models.ForeignKey(
+		Game,
 		on_delete=models.CASCADE
 	)
 
