@@ -3,7 +3,7 @@ import requests
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from TwitchService.importdata.models import Stream
+from TwitchService.importdata.models import Stream, User, Game
 from .serializers import StreamSerializer
 
 class GamesTwitch(APIView):
