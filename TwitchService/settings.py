@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'TwitchService.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'mongo',
+        'NAME': 'mongo1',
         'HOST': 'twitchdb'
     }
 }

@@ -30,16 +30,16 @@ class TwitchView(APIView):
                 continue
             filtered_game_data = self.filter_game_data(game_data['data'])
             stream_data = self.get_stream_data(filtered_game_data['id'])
-            time.sleep(3)
+            time.sleep(5)
             for stream in stream_data['data']:
                 filtered_game_data['total_views'] = filtered_game_data['total_views'] + stream['viewer_count']
             self.save_game(filtered_game_data)
             for stream in stream_data['data']:
+                time.sleep(5)
                 filtered_stream_data = self.filter_stream_data(stream)
                 filtered_user_data = self.get_user_data(stream['user_id'])
                 self.save_user(filtered_user_data)
                 self.save_stream(stream)
-                time.sleep(3)
 
         return Response(data=games_name)
 
@@ -241,7 +241,7 @@ class TwitchView(APIView):
         user.save()
 
         print('o user {} foi salvo'.format(user.display_name))
-        print('o id do usuario = {}'.format(user.id))
+        print('o id do usuario = {}'.format(user.user_id))
         print('o tipo = {}'.format(user.type))
         print('o numero de views = {}'.format(user.view_count))
         print('o numero de follows = {}'.format(user.follows))
