@@ -19,9 +19,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class StreamSerializer(serializers.ModelSerializer):
 
-	game = GameSerializer()
-	user = UserSerializer()
-
 	class Meta:
 
 		model = Stream
