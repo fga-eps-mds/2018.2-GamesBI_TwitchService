@@ -18,7 +18,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 class StreamSerializer(serializers.ModelSerializer):
 
-
 	class Meta:
 
 		model = Stream

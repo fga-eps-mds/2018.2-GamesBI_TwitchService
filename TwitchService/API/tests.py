@@ -1,4 +1,4 @@
-from TwitchService.importdata.models import Stream
+from TwitchService.importdata.models import Stream, Game
 from rest_framework.test import APITestCase, URLPatternsTestCase
 from django.urls import include, path, reverse
 from rest_framework import status
@@ -14,10 +14,10 @@ class EndpointTestCase(APITestCase, URLPatternsTestCase):
     def setUp(self):
 
         self.Stream_twitch = mommy.make(
-            Stream,
-            id = 0,
+            Game,
             game_id = 0,
-            game_name = "aaaa",
+            game_name = "aaa",
+            total_views = "0",
         )
 
         self.twitch_endpoint = reverse('request_stream_list')
@@ -36,6 +36,6 @@ class EndpointTestCase(APITestCase, URLPatternsTestCase):
         response = self.client.get(self.twitch_endpoint,format = 'json')
 
         for data in response.data:
-            self.assertNotEqual(data['id'], None)
             self.assertNotEqual(data['game_id'], None)
             self.assertNotEqual(data['game_name'], None)
+            self.assertNotEqual(data['total_views'], None)
