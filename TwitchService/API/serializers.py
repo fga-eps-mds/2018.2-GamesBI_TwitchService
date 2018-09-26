@@ -8,7 +8,6 @@ class GameSerializer(serializers.ModelSerializer):
 		model = Game
 		fields = '__all__'
 
-
 class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
@@ -18,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class StreamSerializer(serializers.ModelSerializer):
+
 
 	class Meta:
 
