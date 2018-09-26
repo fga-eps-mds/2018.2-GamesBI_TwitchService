@@ -1,11 +1,33 @@
 from django.db import models
 
+class Game(models.Model):
+
+	game_id = models.IntegerField(
+		('Game ID'),
+		help_text=("Id do jogo na Twitch"),
+		primary_key=True
+	)
+
+	game_name = models.CharField(
+		('Game name'),
+		help_text=("Name of game"),
+		max_length=100,
+		null=True
+	)
+
+	total_views = models.IntegerField(
+		('Total views'),
+		help_text=("Total views of a game"),
+		null=True
+	)
+
+
 class User(models.Model):
 
-	id = models.IntegerField(
+	user_id = models.IntegerField(
 		('User ID'),
 		help_text=("User id at Twitch API"),
-		primary_key=True,
+		primary_key=True
 	)
 
 	display_name = models.CharField(
@@ -32,27 +54,15 @@ class User(models.Model):
 		('follows'),
 		help_text=("Number of followers"),
 		null=True
-	)		
-	
+	)
+
 
 class Stream(models.Model):
 
 	id = models.IntegerField(
 		('Stream ID'),
 		help_text=("Id da stream na Twitch"),
-		primary_key=True,
-	)
-
-	game_id = models.IntegerField(
-		('Game ID'),
-		help_text=("Id do jogo na Twitch")
-	)
-
-	game_name = models.CharField(
-		('Name'),
-		help_text=("Name of game"),
-		max_length=100,
-		null=True
+		primary_key=True
 	)
 
 	language = models.CharField(
@@ -76,15 +86,19 @@ class Stream(models.Model):
 		null=True
 	)
 
-	viewer_count = models.FloatField(
+	viewer_count = models.IntegerField(
 		('Viewer count'),
 		help_text=("Number of views in stream"),
-		max_length=100,
 		null=True
 	)
 
 	user = models.ForeignKey(
 		User,
+		on_delete=models.CASCADE
+	)
+
+	game = models.ForeignKey(
+		Game,
 		on_delete=models.CASCADE
 	)
 
